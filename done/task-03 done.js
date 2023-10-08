@@ -15,14 +15,9 @@ const images = [
 
 const gallery = document.querySelector(".gallery");
 
-for (const image of images) {
-  const li = document.createElement("li");
-  const img = document.createElement("img");
+const liTemplate = (image) =>
+  `<li><img src="${image.url}" alt="${image.alt}"></li>`;
 
-  img.src = image.url;
-  img.alt = image.alt;
-
-  li.appendChild(img);
-
-  gallery.appendChild(li);
-}
+images.forEach((image) => {
+  gallery.insertAdjacentHTML("beforeend", liTemplate(image));
+});
