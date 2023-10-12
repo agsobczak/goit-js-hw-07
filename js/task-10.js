@@ -1,9 +1,3 @@
-function getRandomHexColor() {
-  return `#${Math.floor(Math.random() * 16777215)
-    .toString(16)
-    .padStart(6, 0)}`;
-}
-
 function createBoxes(amount) {
   const boxes = [];
   for (let i = 0; i < amount; i++) {
@@ -14,11 +8,19 @@ function createBoxes(amount) {
     box.style.top = i * 10 + "px";
     boxes.push(box);
   }
-  document.querySelector("#boxes").appendChild(...boxes);
+
+  appendBoxesToContainer(boxes, document.querySelector("#boxes"));
 }
 
 function destroyBoxes() {
   document.querySelector("#boxes").innerHTML = "";
+}
+
+function increaseBoxSize(factor) {
+  const boxes = document.querySelectorAll("#boxes div");
+  for (const box of boxes) {
+    increaseBoxSize(box, factor);
+  }
 }
 
 const controls = document.querySelector("#controls");
@@ -33,3 +35,11 @@ createButton.addEventListener("click", () => {
 destroyButton.addEventListener("click", () => {
   destroyBoxes();
 });
+
+const increaseBoxSizeButton = document.createElement("button");
+increaseBoxSizeButton.textContent = "Increase box size";
+increaseBoxSizeButton.addEventListener("click", () => {
+  increaseBoxSize(1.2);
+});
+
+controls.appendChild(increaseBoxSizeButton);
